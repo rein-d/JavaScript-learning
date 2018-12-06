@@ -10,8 +10,7 @@ Container.prototype.render = function () {
 };
 
 Container.prototype.remove = function () {
-    let elem = document.getElementById(this.id);
-    elem.parentNode.removeChild(elem);
+  delete this.htmlCode;
 };
 
 function Menu(my_id, my_class, my_items) {
@@ -19,6 +18,11 @@ function Menu(my_id, my_class, my_items) {
     this.id = my_id;
     this.className = my_class;
     this.items = my_items;
+};
+
+Menu.prototype.remove = function ( i = 0 ) {
+    var elem = document.getElementById(this.id);
+    elem.parentNode.removeChild(elem);
 };
 
 Menu.prototype = Object.create(Container.prototype);
@@ -57,10 +61,7 @@ let m_items = {0: m_item1, 1: m_item2, 2: m_item3};
 
 let menu = new Menu("my_menu", "My_class", m_items);
 
-window.onload = function () {
-    elem.innerHTML = menu.render();
-    menu.remove();
-};
+document.write(menu.render());
 
 
 
