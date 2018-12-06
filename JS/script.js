@@ -10,7 +10,8 @@ Container.prototype.render = function () {
 };
 
 Container.prototype.remove = function () {
-    delete this.htmlCode;
+    let elem = document.getElementById(this.id);
+    elem.parentNode.removeChild(elem);
 };
 
 function Menu(my_id, my_class, my_items) {
@@ -35,15 +36,9 @@ result += '</ul>'
 
 };
 
-Menu.prototype.remove = function ( i = 0 ) {
-    let elem = document.getElementById( this.id ),
-        item = document.getElementsByClassName( 'menu-item' );
-    elem.removeChild( item[ i ] );
-};
-
-function MenuItem(my_href, my_name) {
+function MenuItem(my_href, my_name, my_id) {
     Container.call(this);
-    //this.id = my_id;
+    this.id = my_id;
     this.className = "menu-item";
     this.href = my_href;
     this.name = my_name;
@@ -55,13 +50,18 @@ MenuItem.prototype.render = function () {
 return '<li class=' + this.className + '>' + this.name + '</li>';
 };
 
-let m_item1 = new MenuItem("/", "Главная");
-let m_item2 = new MenuItem("/catalog", "Каталог");
-let m_item3 = new MenuItem("/gallery", "Галерея");
+let m_item1 = new MenuItem("/", "Главная", 1);
+let m_item2 = new MenuItem("/catalog", "Каталог", 2);
+let m_item3 = new MenuItem("/gallery", "Галерея", 3);
 let m_items = {0: m_item1, 1: m_item2, 2: m_item3};
 
-let menu = new Menu("my_menu", "menu_class", m_items);
-menu.remove();
-document.write(menu.render());
+let menu = new Menu("my_menu", "My_class", m_items);
+
+window.onload = function () {
+    elem.innerHTML = menu.render();
+    menu.remove();
+};
+
+
 
 
